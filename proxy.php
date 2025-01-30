@@ -42,3 +42,8 @@ curl_close($ch);
 // Set the response code and return the response
 http_response_code($http_code);
 echo $response;
+curl_close($ch);
+
+// Set the response code and return the response
+http_response_code($http_code);
+echo $response;
