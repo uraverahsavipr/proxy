@@ -6,7 +6,7 @@
     <title>Simple Proxy</title>
 </head>
 <body>
-    <h1>Simple Proxy By Chris</h1>
+    <h1>Simple Proxy Example</h1>
     <form id="proxyForm">
         <label for="url">Enter URL:</label>
         <input type="text" id="url" name="url" required>
@@ -22,12 +22,18 @@
             var encodedUrl = encodeURIComponent(url);
 
             fetch(`proxy.php?path=${encodedUrl}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.text();
+                })
                 .then(data => {
                     document.getElementById('response').textContent = data;
                 })
                 .catch(error => {
-                    document.getElementById('response').textContent = 'Error: ' + error;
+                    document.getElementById('response').textContent = 'Error: ' + error.message;
+                    console.error('Fetch error:', error);
                 });
         });
     </script>
