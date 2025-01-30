@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Proxy</title>
+</head>
+<body>
+    <h1>Simple Proxy By Chris</h1>
+    <form id="proxyForm">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Fetch</button>
+    </form>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById('proxyForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var url = document.getElementById('url').value;
+            var encodedUrl = encodeURIComponent(url);
+
+            fetch(`proxy.php?path=${encodedUrl}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').textContent = data;
+                })
+                .catch(error => {
+                    document.getElementById('response').textContent = 'Error: ' + error;
+                });
+        });
+    </script>
+</body>
+</html>
